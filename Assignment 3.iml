@@ -10,11 +10,25 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
+          <root url="jar://$MODULE_DIR$/External Dependencies/adbc.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/External Dependencies/adbc.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
           <root url="file://$MODULE_DIR$/External Dependencies" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/External Dependencies" />
+        </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/External Dependencies" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/External Dependencies" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

@@ -143,7 +143,7 @@ public class Heap<T extends Comparable<? super T>> {
                "$result == $this.get(FRONT)"})
     public T min()
     {
-        return heapList.get(FRONT);
+        return (size > 0) ? heapList.get(FRONT) : null;
     }
 
     @requires ({"$this.size > 0",

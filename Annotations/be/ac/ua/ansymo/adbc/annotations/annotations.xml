@@ -1,0 +1,8 @@
+<root>
+    <item name='be.ac.ua.ansymo.adbc.annotations.ensures'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+    <item name='be.ac.ua.ansymo.adbc.annotations.requires'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>
