@@ -25,7 +25,7 @@ public class Heap<T extends Comparable<? super T>> {
     { 
         this.maxSize = maxsize; 
         this.size = 0; 
-        heapList = new ArrayList<T>(this.maxSize + 1);
+        heapList = new ArrayList<T>(this.maxSize);
     }
 	
 	@requires ({"$this.size > 0",
@@ -93,14 +93,14 @@ public class Heap<T extends Comparable<? super T>> {
 				  "$this.size == $old($this.size) + 1"})
     //Insert node to heap 
     public void insert(T element)
-    { 
-        heapList.set(size++, element);
-        int currentNode = size; 
+    {
+        heapList.add(element);
+        int currentNode = ++size;
         while (heapList.get(currentNode).compareTo(heapList.get(parentNodePosition(currentNode))) < 0) {
             swap(currentNode, parentNodePosition(currentNode));
             currentNode = parentNodePosition(currentNode);
-        } 
-    } 
+        }
+    }
 	
 	@requires ({"$this.size > 0",
 				"$this.heapList.length > 0"})
