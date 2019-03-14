@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			boolean addNumber = true;
-			Heap minHeap = new Heap(15); 
+			Heap minHeap = new Heap<Integer>(15);
 			try {
 				while(addNumber) {
 					minHeap.insert(userInput());
@@ -27,7 +27,7 @@ public class Main {
     private static int userInput() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter a number to add to the heap or a letter if finished adding.");
-        int key = scan.nextInt();
+        Integer key = scan.nextInt();
         return key;
     }
 }

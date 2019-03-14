@@ -5,12 +5,10 @@ import be.ac.ua.ansymo.adbc.annotations.invariant;
 import be.ac.ua.ansymo.adbc.annotations.requires;
 import be.ac.ua.ansymo.adbc.exceptions.ContractEnforcementException;
 
-import
-
 @invariant	(value = {"$this.heapList.length >= 0",
               "$this.size > 0",
               "$this.maxSize > 0"})
-public class Heap<T> {
+public class Heap<T extends Comparable<? super T>> {
     public static final int FRONT = 1; 
     
 	public ArrayList<T> heapList; 
@@ -74,8 +72,10 @@ public class Heap<T> {
     public void priorityHeap(int position) 
     { 
         if (!isLeaf(position)) { 
-            if (heapList.get(position) > heapList.get(leftChildPosition(position)) || heapList[position] > heapList[rightChildPosition(position)]) {
-                if (heapList[leftChildPosition(position)] < heapList[rightChildPosition(position)]) {
+            if (heapList.get(position).compareTo(heapList.get(leftChildPosition(position))) > 0 ||
+                    heapList.get(position).compareTo(heapList.get(rightChildPosition(position))) > 0)
+            {
+                if (heapList.get(leftChildPosition(position)).compareTo(heapList.get(rightChildPosition(position))) < 0) {
                     swap(position, leftChildPosition(position));
                     priorityHeap(leftChildPosition(position));
                 }
@@ -92,11 +92,11 @@ public class Heap<T> {
 				  "$this.heapList.length == $old($this.heapList.length) + 1",
 				  "$this.size == $old($this.size) + 1"})
     //Insert node to heap 
-    public void insert(int element) 
+    public void insert(T element)
     { 
-        heapList[++size] = element; 
+        heapList.set(size++, element);
         int currentNode = size; 
-        while (heapList[currentNode] < heapList[parentNodePosition(currentNode)]) {
+        while (heapList.get(currentNode).compareTo(heapList.get(parentNodePosition(currentNode))) < 0) {
             swap(currentNode, parentNodePosition(currentNode));
             currentNode = parentNodePosition(currentNode);
         } 
@@ -108,12 +108,12 @@ public class Heap<T> {
 			   "$this.size == $old($this.size) + 1",
 			   "$this.heapList.length > 0"})
     //Remove function
-    public int remove() 
+    public T remove()
     {
-        int remove = heapList[FRONT];
-        heapList[FRONT] = heapList[size--];
+        T removedNode = heapList.get(FRONT);
+        heapList.set(FRONT, heapList.get(size--));
         priorityHeap(FRONT);
-        return remove;
+        return removedNode;
     }
 
     @ensures({"this.heapList[position1] == $old($this.heapList[position2])",
@@ -121,10 +121,10 @@ public class Heap<T> {
     // Swap nodes of the heap
     public void swap(int position1, int position2) 
     { 
-        int temp; 
-        temp = heapList[position1]; 
-        heapList[position1] = heapList[position2]; 
-        heapList[position2] = temp; 
+        T temp;
+        temp = heapList.get(position1);
+        heapList.set(position1, heapList.get(position2));
+        heapList.set(position2, temp);
     }
     
     //public int min
@@ -136,8 +136,8 @@ public class Heap<T> {
     { 
     	System.out.println("The Priority Binary Heap is "); 
         for (int i = 1; i <= size / 2; i++) { 
-            System.out.println("Parent: " + heapList[i]); 
-            System.out.print("Left: " + heapList[2 * i] + "  Right: " + heapList[2 * i + 1]);
+            System.out.println("Parent: " + heapList.get(i));
+            System.out.print("Left: " + heapList.get(2 * i) + "  Right: " + heapList.get(2 * i + 1));
             System.out.println("\n"); 
         } 
     } 
