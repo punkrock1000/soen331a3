@@ -1,3 +1,8 @@
+import be.ac.ua.ansymo.adbc.annotations.ensures;
+import be.ac.ua.ansymo.adbc.annotations.invariant;
+import be.ac.ua.ansymo.adbc.annotations.requires;
+
+
 public class Heap {
     public static final int FRONT = 1; 
     
@@ -5,6 +10,13 @@ public class Heap {
     public int size; 
     public int maxSize; 
 
+	@requires ({"maxsize > 0"})
+	@ensures	({
+					"$this.heapList != null",
+					"$this.maxsize > 0",
+					"$this.size > 0",
+					"$this.size <= this.maxsize"
+    })
     public Heap(int maxsize) 
     { 
         this.maxSize = maxsize; 
@@ -12,7 +24,8 @@ public class Heap {
         heapList = new int[this.maxSize + 1]; 
         heapList[0] = Integer.MIN_VALUE; 
     }
-
+    
+    @requires(value = { "" })
     // Get if node is a leaf
     public boolean isLeaf(int position) 
     { 
@@ -22,7 +35,6 @@ public class Heap {
         return false; 
     }
 
-    @No
     // Get position of parent node
     public int parentNode(int position) 
     { 
