@@ -2,7 +2,9 @@ import be.ac.ua.ansymo.adbc.annotations.ensures;
 import be.ac.ua.ansymo.adbc.annotations.invariant;
 import be.ac.ua.ansymo.adbc.annotations.requires;
 
-
+@invariant	(value = {"$this.heapList.length >= 0",
+              "$this.size > 0",
+              "$this.maxSize > 0"})
 public class Heap {
     public static final int FRONT = 1; 
     
@@ -14,7 +16,7 @@ public class Heap {
 	@ensures	({
 					"$this.heapList != null",
 					"$this.maxsize > 0",
-					"$this.size > 0",
+					"$this.size == 0",
 					"$this.size <= this.maxsize"
     })
     public Heap(int maxsize) 
@@ -22,10 +24,9 @@ public class Heap {
         this.maxSize = maxsize; 
         this.size = 0; 
         heapList = new int[this.maxSize + 1]; 
-        heapList[0] = Integer.MIN_VALUE; 
+        heapList[0] = Integer.MIN_VALUE;
     }
-    
-    @requires(value = { "" })
+
     // Get if node is a leaf
     public boolean isLeaf(int position) 
     { 
@@ -80,6 +81,9 @@ public class Heap {
         } 
     } 
   
+	@requires ({"size < maxSize"})
+	@ensures	({"$this.heapList != null",
+				  "$this.size == $old($this.size) + 1"})
     //Insert node to heap 
     public void insert(int element) 
     { 

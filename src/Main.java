@@ -19,8 +19,8 @@ public class Main {
         minHeap.printHeap(); 
         System.out.print("Min heap:"+minHeap.remove()+" ");
 	}
-    
-    public static int userInput() {
+
+    private static int userInput() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter a number to add to the heap or a letter if finished adding.");
         int key = scan.nextInt();
