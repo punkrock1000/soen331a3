@@ -13,12 +13,10 @@ public class Heap {
     public int maxSize; 
 
 	@requires ({"maxsize > 0"})
-	@ensures	({
-					"$this.heapList != null",
-					"$this.maxsize > 0",
-					"$this.size == 0",
-					"$this.size <= this.maxsize"
-    })
+	@ensures	({"$this.heapList != null",
+				  "$this.maxsize > 0",
+				  "$this.size == 0",
+				  "$this.size <= this.maxsize"})
     public Heap(int maxsize) 
     { 
         this.maxSize = maxsize; 
@@ -110,7 +108,8 @@ public class Heap {
         return remove;
     }
 
-    
+    @ensures({"this.heapList[position1] == $old($this.heapList[position2])",
+    		  "this.heapList[position2] == $old($this.heapList[position1])"})
     // Swap nodes of the heap
     public void swap(int position1, int position2) 
     { 
@@ -118,8 +117,12 @@ public class Heap {
         temp = heapList[position1]; 
         heapList[position1] = heapList[position2]; 
         heapList[position2] = temp; 
-    } 
+    }
     
+    public int min
+    
+	@requires ({"$this.size > 0",
+				"$this.heapList.length > 0"})
     // Print the heap 
     public void printHeap() 
     { 
