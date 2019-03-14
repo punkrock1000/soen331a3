@@ -95,10 +95,14 @@ public class Heap<T extends Comparable<? super T>> {
     public void insert(T element)
     {
         heapList.add(element);
-        int currentNode = ++size;
-        while (heapList.get(currentNode).compareTo(heapList.get(parentNodePosition(currentNode))) < 0) {
+        int currentNode = size++;
+
+        int parentNodePosition = parentNodePosition(currentNode);
+        while (parentNodePosition >= 0 && parentNodePosition < heapList.size() &&
+                heapList.get(currentNode).compareTo(heapList.get(parentNodePosition)) < 0) {
             swap(currentNode, parentNodePosition(currentNode));
             currentNode = parentNodePosition(currentNode);
+            parentNodePosition = parentNodePosition(currentNode);
         }
     }
 	
@@ -110,6 +114,9 @@ public class Heap<T extends Comparable<? super T>> {
     //Remove function
     public T remove()
     {
+        if (size == 0 || heapList.size() == 0)
+            return null;
+        System.out.println(heapList);
         T removedNode = heapList.get(FRONT);
         heapList.set(FRONT, heapList.get(size--));
         priorityHeap(FRONT);
@@ -127,17 +134,29 @@ public class Heap<T extends Comparable<? super T>> {
         heapList.set(position2, temp);
     }
     
-    //public int min
+    public T min()
+    {
+        return null;
+    }
     
 	@requires ({"$this.size > 0",
 				"$this.heapList.length > 0"})
     // Print the heap 
     public void printHeap() 
     { 
-    	System.out.println("The Priority Binary Heap is "); 
-        for (int i = 1; i <= size / 2; i++) { 
+    	System.out.println("The Priority Binary Heap is ");
+        for (int i = 0; i <= (size - 1) / 2; i++) {
             System.out.println("Parent: " + heapList.get(i));
-            System.out.print("Left: " + heapList.get(2 * i) + "  Right: " + heapList.get(2 * i + 1));
+            int leftChildPosition = leftChildPosition(i);
+            int rightChildPosition = rightChildPosition(i);
+            if (leftChildPosition > 0 && leftChildPosition < heapList.size())
+            {
+                System.out.print("Left: " + heapList.get(leftChildPosition));
+                if (rightChildPosition > 0 && rightChildPosition < heapList.size())
+                {
+                    System.out.print("  Right: " + heapList.get(rightChildPosition));
+                }
+            }
             System.out.println("\n"); 
         } 
     } 

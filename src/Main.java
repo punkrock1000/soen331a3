@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
+		System.out.println("Testing the Heap class:");
 		try {
 			boolean addNumber = true;
 			Heap minHeap = new Heap<Integer>(15);
@@ -22,6 +23,9 @@ public class Main {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		System.out.println("Testing the PriorityQueue class:");
+
 	}
 
     private static int userInput() {
