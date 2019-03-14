@@ -42,7 +42,6 @@ public class Heap<T extends Comparable<? super T>> {
             heapList.set(size, element);
         // Sort up the tree from the very last/bottom position of the tree.
         sortUp(size++);
-        System.out.println("Size comp: " + size + " " + heapList.size());
     }
 	
 	@requires ({"$this.size > 0",
@@ -100,7 +99,6 @@ public class Heap<T extends Comparable<? super T>> {
         if (!isLeaf(position)) {
             int leftChildPosition = leftChildPosition(position);
             int rightChildPosition = rightChildPosition(position);
-            System.out.println(leftChildPosition + " " + rightChildPosition);
             // Check whether the left child's key value is greater than the current one.
             if (leftChildPosition >= 0 && leftChildPosition < size && heapList.get(position).compareTo(heapList.get(leftChildPosition(position))) > 0)
             {
