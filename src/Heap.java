@@ -1,14 +1,19 @@
+import java.util.ArrayList;
+
 import be.ac.ua.ansymo.adbc.annotations.ensures;
 import be.ac.ua.ansymo.adbc.annotations.invariant;
 import be.ac.ua.ansymo.adbc.annotations.requires;
+import be.ac.ua.ansymo.adbc.exceptions.ContractEnforcementException;
+
+import
 
 @invariant	(value = {"$this.heapList.length >= 0",
               "$this.size > 0",
               "$this.maxSize > 0"})
-public class Heap {
+public class Heap<T> {
     public static final int FRONT = 1; 
     
-	public int[] heapList; 
+	public ArrayList<T> heapList; 
     public int size; 
     public int maxSize; 
 
@@ -18,13 +23,16 @@ public class Heap {
 				  "$this.size == 0",
 				  "$this.size <= this.maxsize"})
     public Heap(int maxsize) 
+    	throws ContractEnforcementException 
     { 
         this.maxSize = maxsize; 
         this.size = 0; 
-        heapList = new int[this.maxSize + 1]; 
-        heapList[0] = Integer.MIN_VALUE;
+        heapList = new ArrayList<T>(this.maxSize + 1);
     }
-
+	
+	@requires ({"$this.size > 0",
+				"$this.heapList.length > 0",
+				"position < $this.size"})
     // Get if node is a leaf
     public boolean isLeaf(int position) 
     { 
@@ -35,20 +43,20 @@ public class Heap {
     }
 
     // Get position of parent node
-    public int parentNode(int position) 
+    public int parentNodePosition(int position)
     { 
         return position / 2; 
     } 
 
 
     // Get position of right child
-    public int rightBranch(int position) 
+    public int rightChildPosition(int position)
     { 
         return (2 * position) + 1; 
     } 
     
     // Get position of left child
-    public int leftBranch(int position) 
+    public int leftChildPosition(int position)
     { 
         return (2 * position); 
     } 
@@ -66,14 +74,14 @@ public class Heap {
     public void priorityHeap(int position) 
     { 
         if (!isLeaf(position)) { 
-            if (heapList[position] > heapList[leftBranch(position)] || heapList[position] > heapList[rightBranch(position)]) { 
-                if (heapList[leftBranch(position)] < heapList[rightBranch(position)]) { 
-                    swap(position, leftBranch(position)); 
-                    priorityHeap(leftBranch(position)); 
+            if (heapList.get(position) > heapList.get(leftChildPosition(position)) || heapList[position] > heapList[rightChildPosition(position)]) {
+                if (heapList[leftChildPosition(position)] < heapList[rightChildPosition(position)]) {
+                    swap(position, leftChildPosition(position));
+                    priorityHeap(leftChildPosition(position));
                 }
                 else { 
-                    swap(position, rightBranch(position)); 
-                    priorityHeap(rightBranch(position)); 
+                    swap(position, rightChildPosition(position));
+                    priorityHeap(rightChildPosition(position));
                 } 
             } 
         } 
@@ -88,9 +96,9 @@ public class Heap {
     { 
         heapList[++size] = element; 
         int currentNode = size; 
-        while (heapList[currentNode] < heapList[parentNode(currentNode)]) { 
-            swap(currentNode, parentNode(currentNode)); 
-            currentNode = parentNode(currentNode); 
+        while (heapList[currentNode] < heapList[parentNodePosition(currentNode)]) {
+            swap(currentNode, parentNodePosition(currentNode));
+            currentNode = parentNodePosition(currentNode);
         } 
     } 
 	
@@ -119,7 +127,7 @@ public class Heap {
         heapList[position2] = temp; 
     }
     
-    public int min
+    //public int min
     
 	@requires ({"$this.size > 0",
 				"$this.heapList.length > 0"})
