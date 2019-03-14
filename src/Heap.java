@@ -11,9 +11,8 @@ public class Heap {
         this.size = 0; 
         heapList = new int[this.maxSize + 1]; 
         heapList[0] = Integer.MIN_VALUE; 
-    } 
+    }
 
-    
     // Get if node is a leaf
     public boolean isLeaf(int position) 
     { 
@@ -21,9 +20,9 @@ public class Heap {
             return true; 
         } 
         return false; 
-    } 
-    
-    
+    }
+
+    @No
     // Get position of parent node
     public int parentNode(int position) 
     { 
