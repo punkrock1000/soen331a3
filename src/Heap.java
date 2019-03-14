@@ -81,8 +81,9 @@ public class Heap {
         } 
     } 
   
-	@requires ({"size < maxSize"})
+	@requires ({"$this.size < $this.maxSize"})
 	@ensures	({"$this.heapList != null",
+				  "$this.heapList.length == $old($this.heapList.length) + 1",
 				  "$this.size == $old($this.size) + 1"})
     //Insert node to heap 
     public void insert(int element) 
@@ -94,15 +95,20 @@ public class Heap {
             currentNode = parentNode(currentNode); 
         } 
     } 
-
+	
+	@requires ({"$this.size > 0",
+				"$this.heapList.length > 0"})
+	@ensures ({"$this.heapList != null",
+			   "$this.size == $old($this.size) + 1",
+			   "$this.heapList.length > 0"})
     //Remove function
     public int remove() 
-    { 
-        int remove = heapList[FRONT]; 
-        heapList[FRONT] = heapList[size--]; 
-        priorityHeap(FRONT); 
-        return remove; 
-    } 
+    {
+        int remove = heapList[FRONT];
+        heapList[FRONT] = heapList[size--];
+        priorityHeap(FRONT);
+        return remove;
+    }
 
     
     // Swap nodes of the heap

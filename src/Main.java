@@ -9,9 +9,11 @@ public class Main {
 	public static void main(String[] args) {
 		boolean addNumber = true;
 		Heap minHeap = new Heap(15); 
+		System.out.println(minHeap.size);
 		try {
 			while(addNumber) {
 				minHeap.insert(userInput());
+				System.out.println(minHeap.size);
 			}
 		}catch(InputMismatchException error) {
 			addNumber = false;
